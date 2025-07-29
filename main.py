@@ -25,7 +25,7 @@ def backup_to_dropbox():
         collection = db[collection_name]
         cursor = collection.find()
 
-        dropbox_file_path = f"/path to file/{today}_{collection_name}.json"
+        dropbox_file_path = f"/path to file/{today}_{collection_name}.json" #replace with actual path
 
         json_lines = ""
         for doc in cursor:
