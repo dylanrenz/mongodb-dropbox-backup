@@ -11,13 +11,21 @@ def backup_to_dropbox():
  
     print("🔄 Starting backup...")
 
-    
-    DROPBOX_TOKEN = "" # Replace with your actual token
-    dbx = dropbox.Dropbox(DROPBOX_TOKEN)
-    client = MongoClient("") # Replace with your actual MongoDB connection string
-    db = client[""] # Replace with your actual database name
+    # Setup
+    APP_KEY = "app_key_placeholder"
+    APP_SECRET = "app_secret_placeholder"
+    REFRESH_TOKEN = "refresh_token_placeholder"
 
-    
+    # Create Dropbox client using refresh token flow
+    dbx = dropbox.Dropbox(
+        app_key=APP_KEY,
+        app_secret=APP_SECRET,
+        oauth2_refresh_token=REFRESH_TOKEN
+    )
+    client = MongoClient("mongo_string_placeholder")
+    db = client["collection_name_placeholder"]
+
+    # Date for filename
     today = date.today().isoformat()
 
     # Backup and upload each collection
@@ -25,7 +33,7 @@ def backup_to_dropbox():
         collection = db[collection_name]
         cursor = collection.find()
 
-        dropbox_file_path = f"/path to file/{today}_{collection_name}.json" #replace with actual path
+        dropbox_file_path = f"/file_path_placeholder/{today}_{collection_name}.json"
 
         json_lines = ""
         for doc in cursor:
@@ -40,7 +48,7 @@ def backup_to_dropbox():
     print("✅ Backup complete!")
 
 schedule.every().monday.at("06:30").do(backup_to_dropbox)
-schedule.every().tuesday.at("10:58").do(backup_to_dropbox)
+schedule.every().tuesday.at("06:30").do(backup_to_dropbox)
 schedule.every().wednesday.at("06:30").do(backup_to_dropbox)
 schedule.every().thursday.at("06:30").do(backup_to_dropbox)
 schedule.every().friday.at("06:30").do(backup_to_dropbox)
